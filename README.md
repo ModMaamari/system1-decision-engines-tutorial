@@ -36,7 +36,7 @@ npm run dev        # http://localhost:5173
 Other scripts:
 
 ```bash
-npm run build      # static production build in dist/ (works from any folder or static host)
+npm run build      # static production build in dist/, servable from any path on any static host
 npm run preview    # serve the production build locally
 npm test           # unit, component and accessibility tests (Vitest + jsdom + axe-core)
 npm run typecheck  # TypeScript, strict
@@ -44,7 +44,8 @@ npm run check      # typecheck + tests + build
 ```
 
 The app has no backend and makes no network requests at run time; fonts are bundled, so it works
-offline. Reading progress, the theme and the best quiz score are kept in the browser's
+offline. Serve `dist/` over HTTP (for example with `npm run preview` or any static file server):
+browsers block module scripts when `index.html` is opened directly from disk. Reading progress, the theme and the best quiz score are kept in the browser's
 localStorage.
 
 ## How accuracy is handled
