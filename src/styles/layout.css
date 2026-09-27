@@ -188,7 +188,7 @@
   color: var(--accent-text);
 }
 
-.sidebar-num.is-done {
+.sidebar-link .sidebar-num.is-done {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--on-accent);
