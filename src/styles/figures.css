@@ -936,3 +936,244 @@
   font-style: italic;
   border: 1px dashed var(--border-strong);
 }
+
+/* ---------- forward pass (chapter 6) ---------- */
+
+.fp-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.fp-pipeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.fp-pipeline li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.fp-block {
+  --c: var(--viz-neutral);
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 12px;
+  border: 1.5px solid color-mix(in srgb, var(--c) 45%, var(--border));
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+  transition: all 250ms var(--ease-out);
+}
+
+.fp-block.kind-enc {
+  --c: var(--viz-accent);
+  padding: 16px 12px;
+}
+
+.fp-block.kind-head {
+  --c: var(--viz-choice);
+}
+
+.fp-block.kind-small {
+  --c: var(--viz-score);
+}
+
+.fp-block.kind-io {
+  --c: var(--viz-noul);
+}
+
+.fp-block:hover {
+  border-color: var(--c);
+}
+
+.fp-block.is-active {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, var(--surface));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 18%, transparent);
+  transform: translateX(4px);
+}
+
+.fp-block.is-done {
+  background: color-mix(in srgb, var(--c) 6%, var(--surface));
+}
+
+.fp-block-label {
+  font-weight: 650;
+  font-size: 0.88rem;
+}
+
+.fp-block-sub {
+  font-size: 0.74rem;
+  color: var(--text-3);
+}
+
+.fp-branch {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: var(--text-3);
+  border: 1px dashed var(--border-strong);
+}
+
+.fp-branch.is-active {
+  color: var(--text);
+  border-color: var(--viz-choice);
+  background: var(--choice-soft);
+}
+
+.fp-arrow {
+  width: 2px;
+  height: 14px;
+  background: var(--border-strong);
+  position: relative;
+  transition: background 250ms ease;
+}
+
+.fp-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: -3px;
+  border: 4px solid transparent;
+  border-top: 5px solid var(--border-strong);
+}
+
+.fp-arrow.is-done {
+  background: var(--accent);
+}
+
+.fp-arrow.is-done::after {
+  border-top-color: var(--accent);
+}
+
+.fp-detail {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fp-step {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.fp-title {
+  margin: 4px 0 8px;
+}
+
+.fp-shape {
+  align-self: flex-start;
+  margin-bottom: var(--space-3);
+  font-size: 0.8rem;
+}
+
+.fp-body {
+  flex: 1;
+  font-size: 0.93rem;
+}
+
+.fp-body p {
+  margin-bottom: var(--space-3);
+}
+
+.fp-nav {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.fp-rows {
+  display: grid;
+  gap: 6px;
+}
+
+.fp-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.fp-row-bar {
+  height: 12px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(135deg, var(--surface-3) 0 4px, transparent 4px 8px);
+}
+
+.fp-row-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--viz-accent);
+}
+
+.fp-row-mask {
+  display: flex;
+  gap: 3px;
+}
+
+.fp-row-mask i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.fp-row-mask i.on {
+  background: var(--viz-choice);
+}
+
+.fp-row-mask i.off {
+  border: 1.5px dashed var(--border-strong);
+}
+
+.table-wrap .fp-logits {
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.fp-logits td .muted {
+  display: block;
+  font-size: 0.7rem;
+}
+
+.fp-logits th[scope="row"] {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.fp-masked {
+  color: var(--text-3);
+  background: repeating-linear-gradient(135deg, var(--surface-2) 0 5px, transparent 5px 10px);
+}
+
+.fp-answers {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .fp-grid {
+    grid-template-columns: 1fr;
+  }
+}

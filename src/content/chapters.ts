@@ -74,7 +74,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Inside the forward pass",
     summary: "Encoder, type embedding, decision head, marker gathering and the scorer, one stage at a time.",
     minutes: 12,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/ForwardPassChapter")),
   },
   {
     id: "decoding",
