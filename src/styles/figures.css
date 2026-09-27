@@ -408,3 +408,106 @@
   font-weight: 650;
   color: var(--text-2);
 }
+
+/* ---------- latency race (chapter 3) ---------- */
+
+.race-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.race-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.race-col-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.race-lanes {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.race-lane {
+  --c: var(--viz-accent);
+}
+
+.race-lane.tone-s2 {
+  --c: var(--viz-s2);
+}
+
+.race-lane-head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+}
+
+.race-lane-name {
+  font-weight: 600;
+}
+
+.race-lane-time {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.race-track {
+  position: relative;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--surface-3);
+}
+
+.race-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--c);
+}
+
+.race-head {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+.race-lane-sub {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.race-done {
+  color: var(--good);
+  font-weight: 650;
+}
+
+.race-summary {
+  margin-top: var(--space-4);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .race-controls {
+    grid-template-columns: 1fr;
+  }
+}

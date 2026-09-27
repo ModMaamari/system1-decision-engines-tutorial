@@ -50,7 +50,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Autoregressive vs non-autoregressive",
     summary: "Why generating a label token by token is slow and fragile, and what scoring every option at once buys you.",
     minutes: 10,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/ArVsNar")),
   },
   {
     id: "primitives",
