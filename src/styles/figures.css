@@ -1830,3 +1830,163 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- agent pipeline (chapter 14) ---------- */
+
+.ap-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-5);
+  align-items: end;
+  margin-bottom: var(--space-4);
+}
+
+.ap-controls > .segmented {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.ap-input {
+  padding: 10px 14px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.ap-input .qb-col-title {
+  margin: 0;
+}
+
+.ap-input p {
+  margin: 2px 0 0;
+  font-style: italic;
+}
+
+.ap-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.ap-steps::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--border);
+}
+
+.ap-step {
+  --c: var(--viz-accent);
+  position: relative;
+  display: flex;
+  gap: 12px;
+  margin: 0 0 8px;
+  opacity: 0.18;
+  transform: translateY(4px);
+  transition: opacity 350ms ease, transform 350ms var(--ease-out);
+}
+
+.ap-step.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.ap-step.kind-s2 {
+  --c: var(--viz-s2);
+}
+
+.ap-step.kind-end {
+  --c: var(--viz-neutral);
+}
+
+.ap-icon {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--c);
+  color: var(--c);
+}
+
+.ap-main {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.ap-step.is-low .ap-main {
+  border-color: color-mix(in srgb, var(--warn) 55%, var(--border));
+  background: color-mix(in srgb, var(--warn-soft) 40%, var(--surface));
+}
+
+.ap-node {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-weight: 650;
+  font-size: 0.9rem;
+}
+
+.ap-badge {
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.badge-s1 {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+}
+
+.badge-s2 {
+  background: var(--s2-soft);
+  color: var(--s2);
+}
+
+.badge-end {
+  background: var(--surface-3);
+  color: var(--text-3);
+}
+
+.ap-q {
+  margin-top: 3px;
+  font-size: 0.82rem;
+  color: var(--text-2);
+}
+
+.ap-outcome {
+  margin-top: 2px;
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+
+.ap-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: var(--space-4);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 860px) {
+  .ap-controls {
+    grid-template-columns: 1fr;
+  }
+}

@@ -138,7 +138,7 @@ export const CHAPTERS: Chapter[] = [
     title: "System 1 inside agents",
     summary: "Guardrails, routing edges, tool and action selection, cascades and judges: where fast decisions sit in an agent loop.",
     minutes: 14,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Agents")),
   },
   {
     id: "use-cases",
