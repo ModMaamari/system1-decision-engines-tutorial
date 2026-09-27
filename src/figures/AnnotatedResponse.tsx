@@ -138,10 +138,10 @@ export function AnnotatedResponse() {
         <div className="aj-code code" aria-label="Example result">
           <Node v={RESPONSE} path="" depth={0} active={active} onPick={setActive} />
         </div>
-        <aside className="aj-note" aria-live="polite">
+        <div className="aj-note" aria-live="polite">
           <code className="aj-path">{active}</code>
           <p>{noteFor(active) ?? "—"}</p>
-        </aside>
+        </div>
       </div>
     </Figure>
   );

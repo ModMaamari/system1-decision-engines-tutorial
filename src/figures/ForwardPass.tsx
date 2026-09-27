@@ -299,7 +299,7 @@ export function ForwardPass() {
           <div className="fp-step">
             Stage {i + 1} of {STAGES.length}
           </div>
-          <h3 className="fp-title">{stage.title}</h3>
+          <div className="fp-title">{stage.title}</div>
           <code className="fp-shape">{stage.shape(c.d)}</code>
           <div className="fp-body">{stage.body(c.d, c)}</div>
           <div className="fp-nav">

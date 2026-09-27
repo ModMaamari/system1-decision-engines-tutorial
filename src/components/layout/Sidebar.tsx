@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { CHAPTERS, PARTS } from "../../content/chapters";
 import { Icon } from "../Icon";
 
@@ -7,16 +8,37 @@ interface SidebarProps {
   completed: ReadonlySet<string>;
   onNavigate: (id: string) => void;
   onClose: () => void;
+  /** True below the drawer breakpoint: the sidebar is then an off-canvas dialog. */
+  drawer: boolean;
 }
 
-export function Sidebar({ current, open, completed, onNavigate, onClose }: SidebarProps) {
+export function Sidebar({ current, open, completed, onNavigate, onClose, drawer }: SidebarProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  // As a drawer: focus moves in when it opens, and Escape closes it.
+  useEffect(() => {
+    if (!drawer || !open) return;
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [drawer, open, onClose]);
+
   return (
     <>
       <div className={`scrim ${open ? "is-open" : ""}`} onClick={onClose} aria-hidden="true" />
-      <nav className={`sidebar ${open ? "is-open" : ""}`} aria-label="Chapters">
+      <nav
+        id="chapter-nav"
+        className={`sidebar ${open ? "is-open" : ""}`}
+        aria-label="Chapters"
+        // Off-canvas and closed: keep it out of the tab order and the accessibility tree.
+        inert={drawer && !open ? true : undefined}
+      >
         <div className="sidebar-head">
           <span className="sidebar-title">Contents</span>
-          <button type="button" className="icon-button close-button" onClick={onClose} aria-label="Close chapter list">
+          <button ref={closeRef} type="button" className="icon-button close-button" onClick={onClose} aria-label="Close chapter list">
             <Icon name="x" />
           </button>
         </div>

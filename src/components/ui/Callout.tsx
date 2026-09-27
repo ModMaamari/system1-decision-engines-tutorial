@@ -20,7 +20,7 @@ interface CalloutProps {
 export function Callout({ type = "note", title, children }: CalloutProps) {
   const meta = META[type];
   return (
-    <aside className={`callout callout-${type}`}>
+    <div className={`callout callout-${type}`} role="note" aria-label={title ?? meta.label}>
       <div className="callout-icon" aria-hidden="true">
         <Icon name={meta.icon} size={18} />
       </div>
@@ -28,6 +28,6 @@ export function Callout({ type = "note", title, children }: CalloutProps) {
         <div className="callout-title">{title ?? meta.label}</div>
         <div className="callout-content">{children}</div>
       </div>
-    </aside>
+    </div>
   );
 }

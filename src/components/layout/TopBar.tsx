@@ -6,14 +6,23 @@ interface TopBarProps {
   theme: Theme;
   onToggleTheme: () => void;
   onOpenMenu: () => void;
+  menuOpen: boolean;
   onHome: () => void;
   children?: ReactNode;
 }
 
-export function TopBar({ theme, onToggleTheme, onOpenMenu, onHome, children }: TopBarProps) {
+export function TopBar({ theme, onToggleTheme, onOpenMenu, menuOpen, onHome, children }: TopBarProps) {
   return (
     <header className="topbar">
-      <button type="button" className="icon-button menu-button" onClick={onOpenMenu} aria-label="Open chapter list">
+      <button
+        id="menu-button"
+        type="button"
+        className="icon-button menu-button"
+        onClick={onOpenMenu}
+        aria-label="Open chapter list"
+        aria-expanded={menuOpen}
+        aria-controls="chapter-nav"
+      >
         <Icon name="menu" />
       </button>
       <a

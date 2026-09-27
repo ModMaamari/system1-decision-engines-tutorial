@@ -47,7 +47,9 @@ export default function FastAndSlow() {
         <table>
           <thead>
             <tr>
-              <th scope="col" />
+              <th scope="col">
+                <span className="sr-only">Aspect</span>
+              </th>
               <th scope="col">System 1: decision engine</th>
               <th scope="col">System 2: generative model</th>
             </tr>

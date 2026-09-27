@@ -293,7 +293,7 @@
 
 @media (max-width: 760px) {
   .hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -508,7 +508,7 @@
 
 @media (max-width: 760px) {
   .race-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -738,7 +738,7 @@
 
 @media (max-width: 860px) {
   .qb-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1078,6 +1078,10 @@
 
 .fp-title {
   margin: 4px 0 8px;
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
 }
 
 .fp-shape {
@@ -1174,7 +1178,7 @@
 
 @media (max-width: 760px) {
   .fp-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1289,14 +1293,14 @@
 
 @media (max-width: 860px) {
   .dp-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 480px) {
   .gauges,
   .dp-logits.is-dense {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1348,7 +1352,7 @@
 
 @media (max-width: 640px) {
   .se-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1445,7 +1449,7 @@
 
 @media (max-width: 860px) {
   .rs-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1519,7 +1523,7 @@
 @media (max-width: 860px) {
   .cal-controls,
   .cal-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1659,7 +1663,7 @@
 
 @media (max-width: 860px) {
   .rd-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1729,7 +1733,7 @@
 
 @media (max-width: 860px) {
   .aj-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .aj-note {
@@ -1827,7 +1831,7 @@
 @media (max-width: 760px) {
   .gs-charts,
   .sa-track {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1987,7 +1991,7 @@
 
 @media (max-width: 860px) {
   .ap-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -2129,7 +2133,7 @@
 @media (max-width: 760px) {
   .uc-grid,
   .uc-cols {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .uc-list {
@@ -2370,4 +2374,10 @@
 .gl-note {
   margin-top: var(--space-6);
   font-size: 0.85rem;
+}
+
+/* Grid children may hold code blocks or tables; let them shrink and scroll instead of widening the grid. */
+.figure-body [class*="-grid"] > *,
+.figure-body [class*="-cols"] > * {
+  min-width: 0;
 }

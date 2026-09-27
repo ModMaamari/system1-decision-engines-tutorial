@@ -66,3 +66,21 @@ describe("App shell", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(CHAPTERS[8].title);
   });
 });
+
+describe("mobile drawer", () => {
+  it("is inert when closed on narrow screens, and opens, focuses and closes with Escape", async () => {
+    const original = window.matchMedia;
+    window.matchMedia = ((q: string) => ({ ...original(q), matches: q.includes("max-width: 1024px") })) as typeof window.matchMedia;
+    const user = userEvent.setup();
+    render(<App />);
+    const nav = screen.getByRole("navigation", { hidden: true, name: "Chapters" });
+    expect(nav).toHaveAttribute("inert");
+    await user.click(screen.getByRole("button", { name: "Open chapter list" }));
+    expect(nav).not.toHaveAttribute("inert");
+    expect(screen.getByRole("button", { name: "Close chapter list" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(nav).toHaveAttribute("inert");
+    expect(screen.getByRole("button", { name: "Open chapter list" })).toHaveFocus();
+    window.matchMedia = original;
+  });
+});

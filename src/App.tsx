@@ -9,6 +9,7 @@ import { Sidebar } from "./components/layout/Sidebar";
 import { TopBar } from "./components/layout/TopBar";
 import { useHashRoute } from "./hooks/useHashRoute";
 import { isEditableTarget, useKeyboardNav } from "./hooks/useKeyboardNav";
+import { useMediaQuery } from "./hooks/useMediaQuery";
 import { useProgress } from "./hooks/useProgress";
 import { useScrollProgress } from "./hooks/useScrollProgress";
 import { useTheme } from "./hooks/useTheme";
@@ -23,6 +24,7 @@ export default function App() {
   const { completed, markComplete, toggleComplete } = useProgress(CHAPTER_IDS);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const drawer = useMediaQuery("(max-width: 1024px)");
   const scroll = useScrollProgress();
 
   const chapter = getChapter(route) ?? CHAPTERS[0];
@@ -30,7 +32,12 @@ export default function App() {
   const prev = index > 0 ? CHAPTERS[index - 1] : null;
   const next = index < CHAPTERS.length - 1 ? CHAPTERS[index + 1] : null;
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const closeMenu = useCallback(() => {
+    setMenuOpen((wasOpen) => {
+      if (wasOpen) document.getElementById("menu-button")?.focus();
+      return false;
+    });
+  }, []);
   const goPrev = useMemo(() => (prev ? () => navigate(prev.id) : null), [prev, navigate]);
   // Moving on with "Next" is the natural moment to count a chapter as read.
   const goNext = useMemo(
@@ -74,6 +81,7 @@ export default function App() {
         theme={theme}
         onToggleTheme={toggle}
         onOpenMenu={() => setMenuOpen(true)}
+        menuOpen={menuOpen}
         onHome={() => navigate(DEFAULT_CHAPTER)}
       >
         <button
@@ -99,6 +107,7 @@ export default function App() {
           completed={completed}
           onNavigate={navigate}
           onClose={closeMenu}
+          drawer={drawer}
         />
         <main id="main" className="main" tabIndex={-1}>
           <ChapterView
