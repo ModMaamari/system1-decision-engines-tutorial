@@ -154,7 +154,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Evaluation, benchmarks and limits",
     summary: "The metrics that matter, what the published numbers show, and the limits stated plainly.",
     minutes: 11,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Evaluation")),
   },
   {
     id: "quiz",
