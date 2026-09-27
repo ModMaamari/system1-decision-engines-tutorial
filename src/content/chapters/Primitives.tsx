@@ -127,7 +127,7 @@ export default function Primitives() {
         </p>
         <p>
           <strong>Negation.</strong> Semantic labels do not make negation safe: in a small set of cancellation
-          examples, negated requests (“I do <em>not</em> want to cancel”) were still classified as{" "}
+          examples, negated requests (of the kind “I do <em>not</em> want to cancel”) were still classified as{" "}
           <code>cancel_account</code>, once with probability 0.9998. Test the exact wording you serve.
         </p>
       </Callout>
