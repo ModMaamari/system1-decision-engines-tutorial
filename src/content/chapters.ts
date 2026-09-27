@@ -130,7 +130,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Production patterns",
     summary: "Confidence gating, abstention, hooks, throughput and a staged rollout from shadow to promotion.",
     minutes: 12,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Production")),
   },
   {
     id: "agents",
