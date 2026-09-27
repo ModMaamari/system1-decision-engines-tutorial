@@ -82,7 +82,7 @@ export const CHAPTERS: Chapter[] = [
     title: "From logits to answers",
     summary: "Temperature, softmax, expected scores and the two confidence numbers, and which one to gate on.",
     minutes: 10,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Decoding")),
   },
   {
     id: "scoring-rules",
