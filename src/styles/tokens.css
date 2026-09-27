@@ -1,0 +1,132 @@
+/*
+ * Design tokens. Every colour used by components and charts comes from here, so the light and
+ * dark themes stay in step. Semantic roles:
+ *   --accent       System 1 / the non-autoregressive path (fast, one pass)
+ *   --s2           System 2 / the autoregressive path (slow, token by token)
+ *   --choice/--score/--noul   the three decision primitives
+ */
+:root {
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --reading-width: 760px;
+  --wide-width: 1080px;
+  --sidebar-width: 292px;
+  --topbar-height: 56px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 220ms;
+
+  color-scheme: light;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f1f3f7;
+  --surface-3: #e7eaf0;
+  --border: #e2e6ec;
+  --border-strong: #cbd2dc;
+  --text: #0f172a;
+  --text-2: #475569;
+  --text-3: #64748b;
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 16px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.14);
+
+  --accent: #0d9488;
+  --accent-strong: #0f766e;
+  --accent-soft: #ccfbf1;
+  --accent-text: #0f766e;
+  --on-accent: #ffffff;
+
+  --s2: #e11d48;
+  --s2-soft: #ffe4e6;
+
+  --choice: #2563eb;
+  --choice-soft: #dbeafe;
+  --score: #d97706;
+  --score-soft: #fef3c7;
+  --noul: #7c3aed;
+  --noul-soft: #ede9fe;
+
+  --good: #16a34a;
+  --good-soft: #dcfce7;
+  --warn: #b45309;
+  --warn-soft: #fef3c7;
+  --bad: #dc2626;
+  --bad-soft: #fee2e2;
+  --info: #2563eb;
+  --info-soft: #dbeafe;
+
+  --code-bg: #f3f5f9;
+  --code-text: #1e293b;
+  --code-comment: #64748b;
+  --code-keyword: #7c3aed;
+  --code-string: #0f766e;
+  --code-number: #c2410c;
+  --code-func: #2563eb;
+  --code-punct: #475569;
+
+  --grid: #e5e9ef;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0f1c;
+  --surface: #111827;
+  --surface-2: #172033;
+  --surface-3: #1f2a40;
+  --border: #243049;
+  --border-strong: #33415e;
+  --text: #e6e9ef;
+  --text-2: #a6b0c3;
+  --text-3: #7d889d;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+
+  --accent: #2dd4bf;
+  --accent-strong: #5eead4;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --accent-text: #5eead4;
+  --on-accent: #042f2e;
+
+  --s2: #fb7185;
+  --s2-soft: rgba(251, 113, 133, 0.14);
+
+  --choice: #60a5fa;
+  --choice-soft: rgba(96, 165, 250, 0.15);
+  --score: #fbbf24;
+  --score-soft: rgba(251, 191, 36, 0.14);
+  --noul: #a78bfa;
+  --noul-soft: rgba(167, 139, 250, 0.16);
+
+  --good: #4ade80;
+  --good-soft: rgba(74, 222, 128, 0.13);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.13);
+  --bad: #f87171;
+  --bad-soft: rgba(248, 113, 113, 0.14);
+  --info: #60a5fa;
+  --info-soft: rgba(96, 165, 250, 0.14);
+
+  --code-bg: #0d1424;
+  --code-text: #dbe2ee;
+  --code-comment: #7d889d;
+  --code-keyword: #c4b5fd;
+  --code-string: #5eead4;
+  --code-number: #fdba74;
+  --code-func: #93c5fd;
+  --code-punct: #a6b0c3;
+
+  --grid: #1f2a40;
+}

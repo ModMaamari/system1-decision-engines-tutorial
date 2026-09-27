@@ -9,6 +9,19 @@
     />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <title>System 1 Decision Engines</title>
+    <script>
+      // Set the theme before first paint so a dark-mode reader never sees a light flash.
+      (function () {
+        var theme = null;
+        try {
+          theme = JSON.parse(localStorage.getItem("s1-tutorial:theme"));
+        } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
