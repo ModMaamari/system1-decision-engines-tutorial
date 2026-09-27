@@ -28,6 +28,38 @@ describe("App shell", () => {
     expect(screen.getByRole("link", { name: new RegExp(target.title) })).toHaveAttribute("aria-current", "page");
   });
 
+  it("moves with the arrow keys and counts a chapter as read on Next", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.keyboard("{ArrowRight}");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(CHAPTERS[1].title);
+    expect(screen.getByText(`1/${CHAPTERS.length}`)).toBeInTheDocument();
+    await user.keyboard("{ArrowLeft}");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(CHAPTERS[0].title);
+    expect(screen.getByRole("button", { name: "Chapter completed" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("does not steal arrow keys from form controls", async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <App />
+        <input aria-label="probe" />
+      </>,
+    );
+    await user.click(screen.getByLabelText("probe"));
+    await user.keyboard("{ArrowRight}");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(CHAPTERS[0].title);
+  });
+
+  it("toggles completion from the chapter footer", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole("button", { name: "Mark chapter as complete" }));
+    expect(screen.getByRole("button", { name: "Chapter completed" })).toBeInTheDocument();
+    expect(screen.getByText(`1/${CHAPTERS.length}`)).toBeInTheDocument();
+  });
+
   it("opens the chapter named in the URL", () => {
     window.location.hash = `/${CHAPTERS[8].id}`;
     render(<App />);
