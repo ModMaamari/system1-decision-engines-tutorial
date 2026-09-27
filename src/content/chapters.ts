@@ -114,7 +114,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Checkpoints and the router",
     summary: "Three checkpoints, and why the choice between them has to be made before the forward pass.",
     minutes: 10,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Routing")),
   },
   {
     id: "api",

@@ -1522,3 +1522,143 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- router demo (chapter 11) ---------- */
+
+.rd-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.rd-text {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.rd-options {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.rd-lang input {
+  max-width: 280px;
+}
+
+.rd-choice {
+  --c: var(--viz-choice);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--c);
+  background: color-mix(in srgb, var(--c) 10%, var(--surface));
+}
+
+.rd-choice.ck-multilingual {
+  --c: var(--viz-accent);
+}
+
+.rd-choice.ck-typed-decisions {
+  --c: var(--viz-noul);
+}
+
+.rd-choice-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.rd-choice-model {
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.rd-reason {
+  align-self: flex-start;
+  white-space: normal;
+  font-size: 0.78rem;
+}
+
+.rd-profile {
+  margin-top: var(--space-3);
+}
+
+.rd-bar {
+  display: grid;
+  grid-template-columns: 90px 1fr 42px;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.rd-bar + .rd-bar {
+  margin-top: 4px;
+}
+
+.rd-bar-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+}
+
+.rd-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--viz-neutral);
+}
+
+.rd-lang-note {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.rd-ladder {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--text-3);
+}
+
+.rd-ladder li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.rd-ladder li.is-hit {
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-weight: 650;
+}
+
+.rd-dot {
+  width: 5px;
+  height: 5px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+@media (max-width: 860px) {
+  .rd-grid {
+    grid-template-columns: 1fr;
+  }
+}
