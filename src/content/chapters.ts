@@ -122,7 +122,7 @@ export const CHAPTERS: Chapter[] = [
     title: "The API in practice",
     summary: "predict, batches, long documents, schema-driven decide, presets, the CLI, HTTP and MCP.",
     minutes: 12,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Api")),
   },
   {
     id: "production",
