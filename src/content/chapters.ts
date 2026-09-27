@@ -25,8 +25,6 @@ export const PARTS: Part[] = [
   { id: "review", numeral: "VI", title: "Evaluate and review" },
 ];
 
-const placeholder = () => import("./chapters/Placeholder");
-
 export const CHAPTERS: Chapter[] = [
   {
     id: "intro",
@@ -170,7 +168,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Glossary and references",
     summary: "Every term used in the tutorial, and the sources behind it.",
     minutes: 5,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Glossary")),
   },
 ];
 

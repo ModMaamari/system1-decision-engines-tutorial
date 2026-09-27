@@ -2301,3 +2301,73 @@
   margin: 0 0 8px;
   font-size: 2rem;
 }
+
+/* ---------- glossary (chapter 18) ---------- */
+
+.gl-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-3);
+}
+
+.gl-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.gl-search input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+}
+
+.gl-count {
+  margin: 6px 0 var(--space-3);
+  font-size: 0.8rem;
+}
+
+.gl-list {
+  margin: 0;
+}
+
+.gl-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.gl-item dt {
+  font-weight: 650;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.gl-item dd {
+  margin: 2px 0 0;
+  font-size: 0.93rem;
+  color: var(--text-2);
+}
+
+.gl-link {
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.ref-group h3 {
+  margin-top: var(--space-4);
+}
+
+.ref-list {
+  font-size: 0.92rem;
+}
+
+.gl-note {
+  margin-top: var(--space-6);
+  font-size: 0.85rem;
+}
