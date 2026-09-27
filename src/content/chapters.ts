@@ -90,7 +90,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Proper scoring rules",
     summary: "Rewards that are maximised only by reporting what you actually believe.",
     minutes: 12,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/ScoringRules")),
   },
   {
     id: "rlcd",
