@@ -101,3 +101,15 @@ browser check for UI changes), then committed.
   Scoring Rules, Prediction, and Estimation" (2007); Guo et al., "On Calibration of Modern
   Neural Networks" (2017); Shao et al., "DeepSeekMath" (2024, GRPO); Warner et al.,
   "ModernBERT" (2024).
+
+## How the history differed from the plan
+
+The 36 planned commits were made in order, with three small additions where testing found
+something worth its own commit:
+
+- `fix(app): keep the completed check visible on the active chapter` (after chapter 1)
+- `docs(content): mark the ch4 negation example as illustrative` (before chapter 15)
+- a fact-check pass against the Laya repository, committed after the README
+
+Run `git log --oneline --reverse` for the full list.
+
