@@ -34,7 +34,7 @@ export const CHAPTERS: Chapter[] = [
     title: "What is a System 1 decision engine?",
     summary: "A model that answers a fixed set of typed questions about an input in one forward pass, with probabilities instead of generated text.",
     minutes: 7,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Intro")),
   },
   {
     id: "fast-and-slow",
