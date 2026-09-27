@@ -162,7 +162,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Knowledge check",
     summary: "Test your understanding, with an explanation for every answer.",
     minutes: 8,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Quiz")),
   },
   {
     id: "glossary",

@@ -2167,3 +2167,137 @@
   color: var(--text-2);
   line-height: 1.5;
 }
+
+/* ---------- quiz (chapter 17) ---------- */
+
+.quiz-score {
+  position: sticky;
+  top: calc(var(--topbar-height) + 8px);
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.quiz {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) auto 0;
+  counter-reset: q;
+}
+
+.quiz-item {
+  counter-increment: q;
+  margin: 0 0 var(--space-5);
+}
+
+.quiz-q {
+  font-weight: 650;
+  margin-bottom: var(--space-2);
+}
+
+.quiz-q::before {
+  content: counter(q) ". ";
+  color: var(--text-3);
+}
+
+.quiz-options {
+  display: grid;
+  gap: 6px;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+  transition: all var(--duration) ease;
+}
+
+.quiz-option:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.quiz-option:disabled {
+  cursor: default;
+}
+
+.quiz-option > span:nth-child(2) {
+  flex: 1;
+}
+
+.quiz-letter {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.quiz-option.is-correct {
+  border-color: var(--good);
+  background: color-mix(in srgb, var(--good-soft) 60%, var(--surface));
+  color: var(--text);
+}
+
+.quiz-option.is-correct svg {
+  color: var(--good);
+}
+
+.quiz-option.is-wrong {
+  border-color: var(--bad);
+  background: color-mix(in srgb, var(--bad-soft) 60%, var(--surface));
+}
+
+.quiz-option.is-dim {
+  opacity: 0.55;
+}
+
+.quiz-why {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  background: var(--surface-2);
+}
+
+.quiz-why.ok {
+  border-left: 3px solid var(--good);
+}
+
+.quiz-why.no {
+  border-left: 3px solid var(--warn);
+}
+
+.quiz-link {
+  white-space: nowrap;
+}
+
+.quiz-final {
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent-soft), color-mix(in srgb, var(--choice-soft) 60%, var(--surface)));
+  text-align: center;
+}
+
+.quiz-final h2 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
