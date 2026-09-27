@@ -98,7 +98,7 @@ export const CHAPTERS: Chapter[] = [
     title: "RLCD: training with honest rewards",
     summary: "The noisy-logit policy gradient with proper-scoring rewards and soft cross-entropy, step by step.",
     minutes: 14,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Rlcd")),
   },
   {
     id: "calibration",
