@@ -58,7 +58,7 @@ export const CHAPTERS: Chapter[] = [
     title: "The decision primitives",
     summary: "choice, score and noul: the three question types every decision is expressed in.",
     minutes: 10,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Primitives")),
   },
   {
     id: "input-sequence",
