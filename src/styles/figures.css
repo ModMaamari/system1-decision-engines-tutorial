@@ -1448,3 +1448,77 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- calibration lab (chapter 10) ---------- */
+
+.cal-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--space-4) var(--space-5);
+  align-items: end;
+  margin-bottom: var(--space-5);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.cal-chart svg {
+  margin: 0 auto;
+}
+
+.cal-legend {
+  margin-top: var(--space-2);
+}
+
+.cal-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.cal-metric {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.cal-metric-label {
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cal-metric-value {
+  font-size: 1.35rem;
+  font-weight: 750;
+}
+
+.cal-metric-note {
+  font-size: 0.76rem;
+  color: var(--text-2);
+}
+
+.cal-fit {
+  grid-column: 1 / -1;
+  margin: var(--space-2) 0 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 860px) {
+  .cal-controls,
+  .cal-grid {
+    grid-template-columns: 1fr;
+  }
+}

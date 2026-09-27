@@ -106,7 +106,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Calibration and temperature scaling",
     summary: "Reliability diagrams, expected calibration error, and fitting one temperature per question type.",
     minutes: 12,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/Calibration")),
   },
   {
     id: "routing",
