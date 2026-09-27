@@ -66,7 +66,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Building the input sequence",
     summary: "How a question, its options and the state are packed into one token sequence, and what the token budgets cut.",
     minutes: 11,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/InputSequence")),
   },
   {
     id: "forward-pass",
