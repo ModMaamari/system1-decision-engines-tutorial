@@ -42,7 +42,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Fast and slow thinking for machines",
     summary: "Kahneman's System 1 and System 2, and which decisions in software belong to each.",
     minutes: 8,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/FastAndSlow")),
   },
   {
     id: "ar-vs-nar",

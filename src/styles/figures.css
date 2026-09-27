@@ -296,3 +296,115 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- system sorter (chapter 2) ---------- */
+
+.sorter {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  counter-reset: task;
+}
+
+.sorter-item {
+  counter-increment: task;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color var(--duration) ease, background var(--duration) ease;
+}
+
+.sorter-item + .sorter-item {
+  margin-top: 0;
+}
+
+.sorter-item.is-ok {
+  border-color: color-mix(in srgb, var(--good) 45%, var(--border));
+  background: color-mix(in srgb, var(--good-soft) 40%, var(--surface));
+}
+
+.sorter-item.is-wrong {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--border));
+  background: color-mix(in srgb, var(--warn-soft) 40%, var(--surface));
+}
+
+.sorter-text {
+  font-weight: 550;
+  margin-bottom: var(--space-2);
+}
+
+.sorter-text::before {
+  content: counter(task) ". ";
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.sorter-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sorter-btn {
+  --c: var(--accent);
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration) ease;
+}
+
+.sorter-btn.pick-s2 {
+  --c: var(--s2);
+}
+
+.sorter-btn.pick-cascade {
+  --c: var(--choice);
+}
+
+.sorter-btn:hover {
+  border-color: var(--c);
+  color: var(--text);
+}
+
+.sorter-btn.is-picked {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, var(--surface));
+  color: var(--text);
+}
+
+.sorter-feedback {
+  display: flex;
+  gap: 8px;
+  margin-top: var(--space-2);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.sorter-feedback svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.is-ok .sorter-feedback svg {
+  color: var(--good);
+}
+
+.is-wrong .sorter-feedback svg {
+  color: var(--warn);
+}
+
+.sorter-score {
+  margin-top: var(--space-4);
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--text-2);
+}
