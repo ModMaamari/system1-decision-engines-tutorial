@@ -1990,3 +1990,150 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- design wizard and use-case gallery (chapter 15) ---------- */
+
+.dw-trail {
+  list-style: none;
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  font-size: 0.86rem;
+}
+
+.dw-trail li {
+  padding: 4px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.dw-q {
+  font-weight: 650;
+  font-size: 1.02rem;
+  margin-bottom: var(--space-3);
+}
+
+.dw-options {
+  display: grid;
+  gap: 8px;
+}
+
+.dw-option {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: left;
+  font-weight: 550;
+  cursor: pointer;
+  transition: all var(--duration) ease;
+}
+
+.dw-option:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.dw-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 var(--space-2);
+}
+
+.dw-leaf ul {
+  font-size: 0.92rem;
+}
+
+.uc-grid {
+  display: grid;
+  grid-template-columns: minmax(180px, 250px) minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.uc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.uc-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.uc-item:hover {
+  background: var(--surface-2);
+}
+
+.uc-item.is-active {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: var(--accent-soft);
+}
+
+.uc-item-title {
+  font-weight: 650;
+  font-size: 0.9rem;
+}
+
+.uc-strength {
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.s-strong {
+  color: var(--good);
+}
+
+.s-mixed {
+  color: var(--warn);
+}
+
+.s-weak {
+  color: var(--bad);
+}
+
+.s-fine-tune {
+  color: var(--info);
+}
+
+.uc-title {
+  margin: 0;
+}
+
+.uc-source {
+  margin: 2px 0 var(--space-3);
+  font-size: 0.82rem;
+}
+
+.uc-detail .code-block {
+  margin-top: 0;
+}
+
+.uc-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  font-size: 0.88rem;
+}
+
+.uc-cols .qb-col-title {
+  margin-top: 0;
+}
+
+@media (max-width: 760px) {
+  .uc-grid,
+  .uc-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .uc-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

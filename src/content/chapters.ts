@@ -146,7 +146,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Use-case design lab",
     summary: "Turning a real decision into typed questions, with worked schemas and the pitfalls to design around.",
     minutes: 11,
-    Component: lazy(placeholder),
+    Component: lazy(() => import("./chapters/UseCases")),
   },
   {
     id: "evaluation",
