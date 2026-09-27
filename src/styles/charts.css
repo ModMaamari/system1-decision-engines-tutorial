@@ -1,0 +1,261 @@
+.chart {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.chart-plot {
+  position: relative;
+}
+
+.chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.chart-grid {
+  stroke: var(--grid);
+  stroke-width: 1;
+}
+
+.chart-axis {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.chart-ref {
+  stroke: var(--text-3);
+  stroke-width: 1.5;
+}
+
+.chart-crosshair {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+.chart-tick {
+  fill: var(--text-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-axis-label {
+  fill: var(--text-2);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.chart-row-label {
+  fill: var(--text);
+  font-size: 12.5px;
+  font-weight: 550;
+}
+
+.chart-value {
+  fill: var(--text-2);
+  font-size: 11.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 550;
+}
+
+.chart-value.is-max {
+  fill: var(--text);
+  font-weight: 750;
+}
+
+.chart-marker-label,
+.chart-dot-label {
+  fill: var(--text-2);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.chart-bar {
+  cursor: default;
+}
+
+.chart-bar path {
+  transition: opacity 150ms ease;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  list-style: none;
+  margin: 0 0 var(--space-2);
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.chart-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.chart-refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 0.78rem;
+  color: var(--text-3);
+}
+
+.chart-refs span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chart-tooltip {
+  position: absolute;
+  z-index: 5;
+  min-width: 150px;
+  max-width: 220px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  pointer-events: none;
+}
+
+.chart-tooltip-title {
+  font-weight: 650;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-2);
+}
+
+.chart-tooltip-name {
+  flex: 1;
+}
+
+.chart-tooltip-value {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.chart-tooltip-note {
+  margin-top: 4px;
+  color: var(--text-3);
+}
+
+.swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.chart-table {
+  margin-top: var(--space-2);
+  font-size: 0.82rem;
+}
+
+.chart-table summary {
+  cursor: pointer;
+  color: var(--text-3);
+  font-weight: 600;
+  width: fit-content;
+}
+
+.chart-table summary:hover {
+  color: var(--text);
+}
+
+.chart-table .table-wrap {
+  margin-top: var(--space-2);
+}
+
+.chart-table table {
+  min-width: 0;
+}
+
+/* ---------- probability bars ---------- */
+
+.prob-bars {
+  display: grid;
+  gap: 6px;
+}
+
+.prob-row {
+  display: grid;
+  grid-template-columns: minmax(80px, 34%) 1fr 52px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.prob-bars.is-compact .prob-row {
+  grid-template-columns: minmax(64px, 30%) 1fr 46px;
+  font-size: 0.8rem;
+  gap: 8px;
+}
+
+.prob-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.prob-row.is-chosen .prob-label {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.prob-track {
+  position: relative;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: visible;
+}
+
+.prob-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 420ms var(--ease-out);
+  opacity: 0.55;
+}
+
+.prob-row.is-chosen .prob-fill {
+  opacity: 1;
+}
+
+.prob-target {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 18px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--text);
+}
+
+.prob-value {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+
+.prob-row.is-chosen .prob-value {
+  color: var(--text);
+  font-weight: 700;
+}

@@ -77,6 +77,14 @@
   --code-func: #2563eb;
   --code-punct: #475569;
 
+  /* Chart marks (validated categorical set; text never uses these). */
+  --viz-accent: #0d9488;
+  --viz-choice: #2563eb;
+  --viz-score: #d97706;
+  --viz-noul: #7c3aed;
+  --viz-s2: #e11d48;
+  --viz-neutral: #94a3b8;
+
   --grid: #e5e9ef;
 }
 
@@ -127,6 +135,13 @@
   --code-number: #fdba74;
   --code-func: #93c5fd;
   --code-punct: #a6b0c3;
+
+  --viz-accent: #0fa697;
+  --viz-choice: #3b82f6;
+  --viz-score: #c47f0a;
+  --viz-noul: #8b5cf6;
+  --viz-s2: #f43f5e;
+  --viz-neutral: #64748b;
 
   --grid: #1f2a40;
 }
