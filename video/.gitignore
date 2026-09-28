@@ -1,0 +1,10 @@
+node_modules/
+output/
+dist/
+# Raw text-to-speech clips and intermediate mixes (regenerate with npm run narration)
+narration/clips/
+narration/out/
+# Never commit credentials
+.env
+.env.*
+*.env
