@@ -1,0 +1,359 @@
+{
+  "voice": "Charon",
+  "language": "en-US",
+  "style": "Read this as a polished technology explainer narrator: warm, confident and clear, at a natural, engaged conversational pace. Keep it lively and flowing, never slow or drawn out, and never salesy. Use short, natural pauses at sentence ends.",
+  "scenes": [
+    {
+      "id": "s01_open",
+      "part": "",
+      "title": "System 1 decision engines",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Every second, software makes thousands of small decisions."
+        },
+        {
+          "id": "b2",
+          "text": "Which team should get this ticket? Is this prompt a jailbreak? How urgent is this email?"
+        },
+        {
+          "id": "b3",
+          "text": "None of these are open questions. Each has a small, known set of answers, and that shape of problem deserves its own kind of model."
+        },
+        {
+          "id": "b4",
+          "text": "Meet System 1 decision engines: models that answer typed questions in a single forward pass, with a probability for every allowed answer."
+        },
+        {
+          "id": "b5",
+          "text": "Our reference implementation is Laya, an open-source, multilingual decision engine."
+        }
+      ]
+    },
+    {
+      "id": "s02_problem",
+      "part": "Foundations",
+      "title": "The generation tax",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Today, the default is to ask a large language model."
+        },
+        {
+          "id": "b2",
+          "text": "It writes the answer one token at a time. Then your code parses the text, checks the label is one you allowed, and retries when it isn't."
+        },
+        {
+          "id": "b3",
+          "text": "A full generation, a parser and a retry path, for a decision with only three possible answers."
+        }
+      ]
+    },
+    {
+      "id": "s03_fastslow",
+      "part": "Foundations",
+      "title": "Fast and slow thinking",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "The name comes from Daniel Kahneman's Thinking, Fast and Slow, which describes two modes of thought."
+        },
+        {
+          "id": "b2",
+          "text": "System 1 is fast, automatic and cheap: recognizing a face, sensing that a sentence is hostile."
+        },
+        {
+          "id": "b3",
+          "text": "System 2 is slow, deliberate and expensive: long multiplication, checking an argument."
+        },
+        {
+          "id": "b4",
+          "text": "Software has the same split. Language models made System 2 cheap enough to use everywhere, but most production decisions are still System 1 work: known options, on every request, where speed and consistency matter most."
+        },
+        {
+          "id": "b5",
+          "text": "So the fast system should answer first, and its confidence should decide when to call in the slow one."
+        }
+      ]
+    },
+    {
+      "id": "s04_arnar",
+      "part": "Foundations",
+      "title": "Autoregressive vs non-autoregressive",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Here's the core difference."
+        },
+        {
+          "id": "b2",
+          "text": "An autoregressive model generates its answer token by token. Each token is another sequential forward pass, and the output can be malformed, or a label you never offered."
+        },
+        {
+          "id": "b3",
+          "text": "A decision engine never writes the label. The options are part of its input. One forward pass scores every option side by side, and a softmax turns those scores into a distribution over exactly those options."
+        },
+        {
+          "id": "b4",
+          "text": "So the answer is always valid. Every option gets a probability, so you see how close the runner-up was. And the cost doesn't depend on the answer."
+        }
+      ]
+    },
+    {
+      "id": "s05_primitives",
+      "part": "Inside the engine",
+      "title": "The decision primitives",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Every decision is expressed with three question types."
+        },
+        {
+          "id": "b2",
+          "text": "Choice picks one label from several, like which department should handle a request. The label descriptions are what the model actually matches against."
+        },
+        {
+          "id": "b3",
+          "text": "Score places the input on an ordered scale, like urgency, and returns the expected level: a probability-weighted average of the levels."
+        },
+        {
+          "id": "b4",
+          "text": "And noul returns the probability that a statement is true. Is this phishing? Does the user threaten to cancel?"
+        },
+        {
+          "id": "b5",
+          "text": "Several questions about the same input are answered together, in one batched call."
+        }
+      ]
+    },
+    {
+      "id": "s06_sequence",
+      "part": "Inside the engine",
+      "title": "Building the input sequence",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Inside, each question becomes one row of tokens."
+        },
+        {
+          "id": "b2",
+          "text": "A header with the question type and instructions. Then every option, each preceded by a mask token that marks where its score will be read. Then the input itself."
+        },
+        {
+          "id": "b3",
+          "text": "The encoder is bidirectional, so each marker sees its option, the question, the rival options and the input, all at once."
+        },
+        {
+          "id": "b4",
+          "text": "But the options share one fixed token budget. With seventy-seven options, each label keeps about three tokens, and similar labels collapse into the same text. The rule of thumb: keep choice questions under about twenty options."
+        }
+      ]
+    },
+    {
+      "id": "s07_forward",
+      "part": "Inside the engine",
+      "title": "Inside the forward pass",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Now follow that row through the model."
+        },
+        {
+          "id": "b2",
+          "text": "A pretrained encoder, ModernBERT large for English, reads the whole row. A type embedding says which primitive this is, and a small two-layer decision head refines every position."
+        },
+        {
+          "id": "b3",
+          "text": "The model gathers the hidden vector at each marker, and a shared scorer turns each one into a single number: one logit per option."
+        },
+        {
+          "id": "b4",
+          "text": "Because options are inputs, not fixed output units, the same weights can score two options or twenty, even labels the model has never seen."
+        },
+        {
+          "id": "b5",
+          "text": "On a Tesla T4, one question takes about thirty-three milliseconds on the multilingual checkpoint. Ten questions take seventy-two: about seven milliseconds each."
+        }
+      ]
+    },
+    {
+      "id": "s08_decoding",
+      "part": "Inside the engine",
+      "title": "From logits to answers",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Decoding is a few lines: divide the logits by a temperature, then apply a softmax."
+        },
+        {
+          "id": "b2",
+          "text": "Temperature never changes which option wins. It only changes how confident the model sounds."
+        },
+        {
+          "id": "b3",
+          "text": "And of the two confidence numbers the engine reports, gate on answer confidence, the probability of the chosen answer. That's the number calibration is fitted on."
+        }
+      ]
+    },
+    {
+      "id": "s09_scoring",
+      "part": "Training and calibration",
+      "title": "Proper scoring rules",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "For those probabilities to mean anything, honesty has to be trained in."
+        },
+        {
+          "id": "b2",
+          "text": "The tool is a strictly proper scoring rule: a reward that is maximized, on average, only by reporting what you truly believe."
+        },
+        {
+          "id": "b3",
+          "text": "If the truth is seventy percent, the log, spherical and Brier scores all peak at exactly seventy. A linear reward keeps climbing towards certainty: it pays for overconfidence. And plain accuracy can't tell fifty-one percent from ninety-nine."
+        }
+      ]
+    },
+    {
+      "id": "s10_rlcd",
+      "part": "Training and calibration",
+      "title": "RLCD",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Laya's training method builds on this. It's called RLCD: Reinforcement Learning for Calibrated Decisions."
+        },
+        {
+          "id": "b2",
+          "text": "For each item, it adds noise to the logits to sample a small group of candidate distributions, rewards each with a proper scoring rule, and compares it with its group's average."
+        },
+        {
+          "id": "b3",
+          "text": "The logits move towards the above-average samples, while a soft cross-entropy term pulls towards the teacher's full distribution, uncertainty included."
+        },
+        {
+          "id": "b4",
+          "text": "Fine-tuning is where the accuracy comes from. On the typed-decisions benchmark, the base model scores zero point three six. Fine-tuned, it reaches zero point seven seven, above the teacher's own self-agreement."
+        }
+      ]
+    },
+    {
+      "id": "s11_calibration",
+      "part": "Training and calibration",
+      "title": "Calibration",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "A model is calibrated when its confidence means what it says: of the answers given at eighty percent, about eighty percent are right."
+        },
+        {
+          "id": "b2",
+          "text": "The shipped checkpoints are over-confident. The fix is temperature scaling, fitted on held-out data. It never changes an answer, and it cuts calibration error from zero point four seven to zero point zero eight."
+        },
+        {
+          "id": "b3",
+          "text": "But calibration can't rescue an input the model cannot read. On Khmer, the English checkpoint scored zero accuracy, at ninety-five percent confidence."
+        }
+      ]
+    },
+    {
+      "id": "s12_router",
+      "part": "Using it",
+      "title": "Checkpoints and the router",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "That's why Laya ships three checkpoints and a router."
+        },
+        {
+          "id": "b2",
+          "text": "One for English, a faster multilingual one for over a hundred languages, and one fine-tuned for four specific workflows."
+        },
+        {
+          "id": "b3",
+          "text": "Before any forward pass, the router detects script and language in well under a millisecond, and sends the text to a checkpoint that can read it. Across fifty-one languages, usable coverage nearly doubles: from twenty-three to forty-five."
+        }
+      ]
+    },
+    {
+      "id": "s13_production",
+      "part": "Using it",
+      "title": "Production patterns",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "In production, a decision engine returns evidence, not permission."
+        },
+        {
+          "id": "b2",
+          "text": "The core pattern is confidence gating: above a threshold, act automatically; below it, escalate to a human, a rule, or a larger model. The threshold is a policy, chosen from measured accuracy and the cost of mistakes."
+        },
+        {
+          "id": "b3",
+          "text": "Roll out in stages: shadow, compare, choose a policy, then promote a bounded slice of traffic, with a rollback plan."
+        }
+      ]
+    },
+    {
+      "id": "s14_agents",
+      "part": "Agents and applications",
+      "title": "System 1 inside agents",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "This matters most inside agents."
+        },
+        {
+          "id": "b2",
+          "text": "An agent loop is full of small, typed decisions. Is this input safe? Which tool comes next? Is the task done? Is this output good enough to send?"
+        },
+        {
+          "id": "b3",
+          "text": "System 1 takes those in milliseconds, and hands only the uncertain cases to System 2."
+        },
+        {
+          "id": "b4",
+          "text": "In one browser agent, fine-tuning lifted the right-element choice from ten percent, which is chance, to nearly two thirds, with each step decided in about twenty milliseconds."
+        }
+      ]
+    },
+    {
+      "id": "s15_limits",
+      "part": "Evaluate and review",
+      "title": "Limits and evaluation",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "It isn't magic, and the limits deserve plain words."
+        },
+        {
+          "id": "b2",
+          "text": "A decision engine is not a reasoner: it can't explain itself or answer open questions. Zero-shot, the base checkpoints are near chance on specialized workflows, they ship over-confident, and long option lists or other languages need care."
+        },
+        {
+          "id": "b3",
+          "text": "So evaluate on your own traffic, fine-tune on your own decisions, fit temperatures on held-out data, and gate every change in CI."
+        }
+      ]
+    },
+    {
+      "id": "s16_outro",
+      "part": "",
+      "title": "Recap",
+      "beats": [
+        {
+          "id": "b1",
+          "text": "Let System 1 answer first: in one pass, with honest probabilities."
+        },
+        {
+          "id": "b2",
+          "text": "And let calibrated confidence decide when it's time to think slow."
+        },
+        {
+          "id": "b3",
+          "text": "That's System 1 decision engines. Explore all eighteen chapters in the interactive tutorial."
+        }
+      ]
+    }
+  ]
+}

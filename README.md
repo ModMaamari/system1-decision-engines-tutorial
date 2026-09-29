@@ -24,6 +24,14 @@ playground, a proper-scoring-rule explorer, a live RLCD trainer, a calibration l
 demo, an annotated API response, a confidence-gating and cost simulator, an agent pipeline
 simulator, a decision-design wizard, benchmark charts and a quiz.
 
+## Video
+
+[`video/`](video/) holds a narrated, 9-minute motion-graphics summary of the whole tutorial, made
+with Motion Canvas: [`video/system1-decision-engines.mp4`](video/system1-decision-engines.mp4)
+(1080p, with English subtitles). The narration is generated with text-to-speech and every number on
+screen comes from the same sourced data as the tutorial. See [`video/README.md`](video/README.md) for
+how it is built and rendered.
+
 ## Run it
 
 Requires Node.js 22.12 or newer (Vitest needs it; developed on Node 24).
