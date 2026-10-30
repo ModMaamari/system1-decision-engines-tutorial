@@ -8,6 +8,8 @@
 
 **How to read the counts.** Every count describes one 3,750-word ML conference paper. A count of 0 means the authors did not need that item, not that it is wrong. Treat the numbers as a target profile for empirical CS and ML writing, not as quotas, and adapt for other fields. Wherever this file says "never" or "do not use", the necessity test in SKILL.md takes precedence: a flagged item stays when it is verbatim material, a term of art, required by the venue, structurally needed, or the only way to keep the meaning. `keep-list.md` lists the common cases.
 
+**Contents.** 1 Voice · 2 Measured profile · 3 Document structure (abstract, introduction, background, method, justification, setup, results, conclusion, headings and captions) · 4 Paragraphs · 5 Sentences · 6 Word choice · 7 Numbers and claims · 8 Connectives · 9 Hedging · 10 Definitions and notation · 11 Citations · 12 Punctuation · 13 Lists · 14 Things to avoid (14.1 punctuation, 14.2 avoided words, 14.3 restricted words, 14.4 sentence patterns, 14.5 document patterns, 14.6 claims) · 15 Rewrite examples · 16 Checklist
+
 ---
 
 ## 1. The voice in one paragraph

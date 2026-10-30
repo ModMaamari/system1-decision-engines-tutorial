@@ -58,6 +58,8 @@ Always keep them in these uses (D, C):
 
 Only the spaced en dash used as a clause separator ("the model – unlike its predecessor – converges") should change.
 
+One range usage is an error in most style guides (Chicago, APA, AP): a dash after "from" or "between". Write "from 2019 to 2023" and "between 10 and 20", not "from 2019–2023". This fix replaces the dash with words, and it is not a reason to remove range dashes elsewhere.
+
 ### Colons
 
 Beyond introducing equations, formulas, and lists, keep colons in these uses:

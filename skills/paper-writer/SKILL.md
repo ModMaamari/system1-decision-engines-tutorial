@@ -68,7 +68,11 @@ Pick the mode from the request. When unclear, revise if the user supplied text a
    - **Kept on purpose:** flagged items you left in, each with its reason (A to E). List only items a reviewer might question.
    - **Needs evidence:** claims that have no number, baseline, or citation, which you could not fix without inventing something.
 
-When the user points at a file and asks for it to be revised, edit the file in place so the diff is reviewable. Otherwise return the text in chat.
+When the user points at a file and asks for it to be revised, edit the file in place so the diff is reviewable, and put the notes in chat, not in the file. Otherwise return the text and the notes in chat.
+
+Placeholders such as `[VALUE: ...]` belong in revised text only when the sentence exists to report the missing number ("Accuracy improved significantly" becomes "Accuracy improved by [VALUE: margin over baseline]"). When the missing detail is a name or a description, keep the author's wording and list it under "Needs evidence" instead of guessing.
+
+A misplaced boilerplate block, such as an "In conclusion" paragraph at the end of an introduction, becomes whatever that position needs (for an introduction, the contribution statement or the open question) if the text already supplies the facts. Otherwise delete it and say so in the notes.
 
 ### Audit (the user wants a check, not a rewrite)
 

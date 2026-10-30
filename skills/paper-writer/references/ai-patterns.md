@@ -10,6 +10,10 @@ Every list in this file is a list of candidates, not of errors. The necessity te
 
 These instructions apply to academic papers, reports, essays, articles, blog posts, commentary, professional writing, and social posts. Adapt the register to the genre.
 
+## Contents
+
+1 Substance before style · 2 Do not ban ordinary words · 3 High-risk vocabulary (3.1 research-backed markers, 3.2 editorially suspicious) · 4 Sentence templates (negative parallelism, significance inflation, broader-context inflation, participial tails, throat-clearing, transition chains, canned conclusions, challenges boilerplate) · 5 Structural habits · 6 Content-level signs · 7 Academic writing · 8 Articles and blogs · 9 Social posts · 10 Punctuation · 11 Do not humanize artificially · 12 Plain-verb check · 13 Specificity check · 14 Rhythm check · 15 Transition check · 16 AI-cluster check · 17 Seven-pass revision workflow · 18 Before/after examples · 19 Genre exceptions · 20 Final self-audit · 21 Compact prompt · 22 Research basis
+
 ---
 
 ## 1. Highest-priority rule: substance before style
