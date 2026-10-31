@@ -84,7 +84,7 @@ def load_plain(path):
 # --------------------------------------------------------------------------
 
 TEX_LEVELS = {"part": 0, "section": 1, "subsection": 2, "subsubsection": 3}
-FLOAT_ENVS = r"figure\*?|table\*?|wrapfigure|wraptable|algorithm\*?|listing"
+FLOAT_ENVS = r"figure\*?|table\*?|teaserfigure|wrapfigure|wraptable|algorithm\*?|listing|longtable|tikzpicture"
 SKIP_ENVS = r"thebibliography"
 
 
