@@ -3,7 +3,7 @@
 
 Usage:
     python paper_map.py paper.tex              # outline: sections, paragraphs, captions, line ranges
-    python paper_map.py paper.pdf --numbers    # headline numbers and where else they appear
+    python paper_map.py paper.pdf --numbers    # claim numbers vs evidence, and internal pointers
     python paper_map.py paper.md --json        # machine-readable outline
 
 Anchors look like S3.2.P4 (section 3.2, paragraph 4), S0.P1 (abstract) and
@@ -301,7 +301,7 @@ NUM = re.compile(
     r"(?P<unit>\s?(?:\\?%|×|x(?![A-Za-z])|\\times|k(?![A-Za-z])|M(?![A-Za-z])|B(?![A-Za-z])|ms|s(?![A-Za-z])|GB|MB|TB|h(?![A-Za-z])|pp))?"
 )
 REF_BEFORE = re.compile(r"(Table|Tab\.|Figure|Fig\.|Section|Sec\.|§|Eq\.|Equation|Appendix|Algorithm|Line|line|Theorem|Lemma|RQ|Step|Chapter|row|Row)\s*~?$")
-HEADLINE_SECTIONS = re.compile(r"(?i)abstract|intro|conclu|summary|discussion")
+EVIDENCE_SECTIONS = re.compile(r"(?i)experiment|result|evaluat|ablation|analys|benchmark|appendix|supplement")
 
 
 def norm(val):
@@ -382,24 +382,30 @@ def render_outline(path, lines, sections):
 
 def render_numbers(path, lines, sections, anchors, nums):
     titles = {s["id"]: s["title"] for s in sections}
+    nums = [n for n in nums if anchors[n["line"]] != "skip"]
 
     def section_of(anchor):
         sid = anchor.split(".P")[0].split(".Cap")[0].split(".Float")[0]
         return sid
 
+    def is_evidence(n):
+        a = n["anchor"]
+        return (".Float" in a or ".Cap" in a or EVIDENCE_SECTIONS.search(titles.get(n["sec"], ""))
+                or re.match(r"S[A-H](\.|$)", n["sec"]) is not None)
+
     head, rest = [], []
-    nums = [n for n in nums if anchors[n["line"]] != "skip"]
     for n in nums:
         n["anchor"] = anchors[n["line"]]
         n["sec"] = section_of(n["anchor"])
-        (head if HEADLINE_SECTIONS.search(titles.get(n["sec"], "")) else rest).append(n)
+        (rest if is_evidence(n) else head).append(n)
 
-    out = [f"# Number cross-reference: {path.name}", ""]
-    out.append("Headline numbers come from the abstract, introduction, discussion and conclusion. For each one,")
-    out.append("the list shows where the same value (or a value that rounds to it) appears elsewhere. A number")
-    out.append("that appears nowhere else may be stale, computed in the text, or from a different run: verify it")
-    out.append("against the tables and results. Matching values can still belong to different configurations, so")
-    out.append("check the context.")
+    out = [f"# Number and pointer cross-reference: {path.name}", ""]
+    out.append("Claim numbers are numbers stated outside the evidence (abstract, introduction, background, method,")
+    out.append("discussion, conclusion). Evidence is the experiments, results and appendix sections plus every")
+    out.append("table, figure and caption. For each claim number, the list shows where the same value (or a value")
+    out.append("that rounds to it) appears in the evidence. A claim number with no match may be stale, computed in")
+    out.append("the text, a setting, or from a different run: verify it by hand. Matching values can still belong")
+    out.append("to different configurations, so check the context.")
     out.append("")
     missing, found = [], []
     for h in head:
@@ -411,11 +417,11 @@ def render_numbers(path, lines, sections, anchors, nums):
             found.append(entry + f"\n    also at: {where}{more}")
         else:
             missing.append(entry)
-    out.append(f"## Not found outside the headline sections ({len(missing)})")
+    out.append(f"## Claim numbers with no match in the evidence ({len(missing)})")
     out.append("")
     out.extend(missing or ["(none)"])
     out.append("")
-    out.append(f"## Found elsewhere ({len(found)})")
+    out.append(f"## Claim numbers found in the evidence ({len(found)})")
     out.append("")
     out.extend(found or ["(none)"])
 
@@ -432,13 +438,51 @@ def render_numbers(path, lines, sections, anchors, nums):
         out.append("")
         for (val, unit), secs in shared[:25]:
             out.append(f"- {val}{unit}: {', '.join(sorted(secs))}")
+    out.extend(render_pointers(lines, sections, anchors))
     return "\n".join(out)
+
+
+def render_pointers(lines, sections, anchors):
+    """List internal pointers (Section N, \\ref) with their targets, so forward
+    references and wrong targets can be checked."""
+    order = [s["id"] for s in sections]
+    titles = {s["id"]: s["title"] for s in sections}
+    labels = {}
+    for i, (text, *_r) in enumerate(lines):
+        for m in re.finditer(r"\\label\{([^}]+)\}", text):
+            labels[m.group(1)] = anchors[i]
+    found = []
+    for i, (text, *_r) in enumerate(lines):
+        src = anchors[i]
+        if src == "skip":
+            continue
+        src_sec = src.split(".P")[0].split(".Cap")[0].split(".Float")[0]
+        for m in re.finditer(r"\b(Section|Sec\.|§)\s*~?(\d+(?:\.\d+)*|[A-H](?:\.\d+)*)\b", text):
+            found.append((i, src, src_sec, m.group(0), "S" + m.group(2)))
+        for m in re.finditer(r"\\(?:auto|c|C)?ref\{([^}]+)\}", text):
+            found.append((i, src, src_sec, m.group(0), labels.get(m.group(1))))
+    if not found:
+        return []
+    res = ["", "## Internal pointers (check that the target exists, says what the text claims, and is not a forward reference the reader needs)", ""]
+    for i, src, src_sec, txt, tgt in found:
+        tsec = tgt.split(".P")[0].split(".Cap")[0].split(".Float")[0] if tgt else None
+        if tgt is None:
+            note = "target label not found"
+        elif tsec not in titles:
+            note = "target section does not exist"
+        else:
+            note = f"-> {tgt} ({titles[tsec]})"
+            if src_sec in order and tsec in order and order.index(tsec) > order.index(src_sec):
+                note += ", forward reference"
+        res.append(f"- {src} {loc(lines, i)}: \"{txt}\" {note}")
+    return res
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("paper", help="paper file: .tex (main file), .md, .txt or .pdf")
-    ap.add_argument("--numbers", action="store_true", help="cross-reference headline numbers")
+    ap.add_argument("--numbers", action="store_true",
+                    help="cross-reference claim numbers against the evidence, and list internal pointers")
     ap.add_argument("--json", action="store_true", help="print the outline as JSON")
     args = ap.parse_args()
 

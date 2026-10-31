@@ -30,14 +30,21 @@ If the venue is unknown, review against a top general ML conference and say so i
 
 ### 1. Map the paper
 
-Run the helper script to get section and paragraph anchors and a cross-reference of numbers:
+Run the helper script to get section and paragraph anchors, and to cross-check numbers and internal pointers. The `scripts/` path is relative to this skill's folder, so use the full path to the script:
 
 ```bash
-python scripts/paper_map.py paper.tex            # outline with anchors such as S3.P2 and line ranges
-python scripts/paper_map.py paper.tex --numbers  # headline numbers and where else they appear
+python <this-skill-folder>/scripts/paper_map.py paper.tex            # outline with anchors such as S3.P2 and line ranges
+python <this-skill-folder>/scripts/paper_map.py paper.tex --numbers  # claim numbers vs evidence, and internal pointers
 ```
 
-The script handles `.tex`, `.md`, `.txt` and `.pdf` (PDF needs `pdftotext` or the `pypdf` package). For a LaTeX project, pass the main file. It follows `\input` and `\include`. Use the anchors it prints in every note so that the authors can find each location.
+The script handles `.tex`, `.md`, `.txt` and `.pdf` (PDF needs `pdftotext` or the `pypdf` package, and its paragraph splits are approximate). For a LaTeX project, pass the main file. It follows `\input` and `\include`, and prints each location as `file:L<range>`. Copy anchors exactly as printed, including the file name for multi-file projects (`S2.P1 · background.tex:L2`).
+
+The `--numbers` output has three parts:
+- **Claim numbers with no match in the evidence:** numbers stated in the abstract, introduction, background, method or conclusion that never appear in the experiments, results, appendix, tables or captions. Each is a candidate for an `[Internal contradiction]` or `[Evidence scope]` note once checked by hand.
+- **Values repeated across sections:** check that they refer to the same setting.
+- **Internal pointers:** section and `\ref` targets, with forward references and missing targets marked.
+
+The script cannot see contradictions in wording, such as a caption and the text naming different settings for the same runs. Those still need the cross-check in step 3.
 
 ### 2. Read linearly as the target reader
 
@@ -83,7 +90,10 @@ Nothing else: no summary score, no verdict, no closing summary.
 - Say which points are editorial targets and which are venue rules.
 - When a note asks for new evidence, also offer the alternative of narrowing the claim.
 
-**Volume.** Aim for roughly one note per substantive paragraph where something is wrong, and none where nothing is. A full conference paper typically gets 60 to 120 notes, mostly on scope, placement and consistency, plus a handful of precise correctness notes. A short paper or a single section gets proportionally fewer. Do not pad.
+**Volume.** Aim for roughly one note per substantive paragraph where something is wrong, and none where nothing is. A full conference paper typically gets 60 to 120 notes, mostly on scope, placement and consistency, plus a handful of precise correctness notes.
+- **Short papers and single sections:** the count follows the problems, not the page count. A dense four-page draft can need several notes per paragraph.
+- **Repeated problems:** when the same problem recurs (the same unscoped number in the abstract, introduction and conclusion), write one full note at the first occurrence and a one-line pointer at each later one ("Same as S0.P1: scope to the timed configuration.").
+- **Do not pad.** A note that would not change what the authors write is padding.
 
 **Tone.** Calm, precise, collegial, never sarcastic. Criticise the text, not the authors. Credit what works, and be specific about it. Reserve "crucially" for the one issue in a note that matters most.
 
@@ -125,5 +135,5 @@ These rules come from model section 4. They are as binding as the checks.
 ## Files
 
 - `references/mg-review-model.md`: the full MG review model. Read it before every review.
-- `scripts/paper_map.py`: section and paragraph anchors with line ranges, plus a headline-number cross-reference. Standard library only. PDF input uses `pdftotext` or `pypdf` when available.
+- `scripts/paper_map.py`: section and paragraph anchors with line ranges, a claim-number versus evidence cross-reference, and an internal-pointer check. Standard library only. PDF input uses `pdftotext` or `pypdf` when available.
 - `assets/review-template.md`: the layout of the review file.

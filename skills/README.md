@@ -92,7 +92,7 @@ The skill is built from two source documents: a guide to avoiding AI-sounding pr
 - **Review and edit:** only when you allow it. Edits are conservative and keep the previous wording as comments, semantic changes are flagged separately, and numbers and results never change.
 - **Inline comments:** on request, a copy of the source with `% MG [Label] ...` comments above each paragraph.
 
-`scripts/paper_map.py` prints the section and paragraph anchors, with line ranges and page numbers for PDFs. With `--numbers`, it cross-references headline numbers from the abstract, introduction and conclusion against the rest of the paper and lists any that never appear in the tables or results.
+`scripts/paper_map.py` prints the section and paragraph anchors, with line ranges and page numbers for PDFs. With `--numbers`, it checks every number stated outside the results (abstract, introduction, background, method, conclusion) against the experiments, tables, captions and appendix, and lists the numbers with no match. It also lists internal pointers such as "Section 5" and `\ref{}`, and marks forward references and missing targets.
 
 ```bash
 python mg-review/scripts/paper_map.py paper.tex
