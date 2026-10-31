@@ -1,12 +1,17 @@
-# paper-writer skill
+# Claude skills for writing and reviewing papers
 
-`paper-writer` is a Claude skill for drafting, revising, and auditing academic and technical prose. It removes formulaic LLM patterns such as inflated vocabulary, stock templates, additive transitions, and claims without numbers. It edits with precision and keeps a flagged word or mark when the meaning needs it.
+Each skill is shared as a single `.skill` file, which is a zip of its folder.
 
-`paper-writer.skill` is the packaged, shareable file. `paper-writer/` is the source.
+| Skill | File | What it does |
+|---|---|---|
+| `paper-writer` | `paper-writer.skill` | Drafts, revises and audits academic prose without formulaic LLM patterns. It is precise, not mechanical: a flagged word or mark stays when the meaning needs it. |
+| `mg-review` | `mg-review.skill` | Reviews a paper the way reviewer MG does: labelled, location-anchored notes on legibility, claim scope, statistics, fairness, consistency and placement, each with a concrete action. |
 
 ## Install
 
-**Claude.ai or the Claude desktop app.** Open Settings, then Capabilities (or Skills), upload `paper-writer.skill`, and enable it. If a chat shows the file with a **Save skill** button, clicking it installs the skill too.
+The steps are the same for both skills. The commands below use `paper-writer.skill`; replace the file name for the other skill.
+
+**Claude.ai or the Claude desktop app.** Open Settings, then Capabilities (or Skills), upload the `.skill` file, and enable it. If a chat shows the file with a **Save skill** button, clicking it installs the skill too.
 
 **Claude Code, for one project.** Unzip the file into the project's `.claude/skills/` folder:
 
@@ -20,7 +25,17 @@ unzip paper-writer.skill -d .claude/skills/
 unzip paper-writer.skill -d ~/.claude/skills/
 ```
 
-Then type `/paper-writer` followed by your request, or ask normally ("make this abstract sound less like AI") and Claude loads the skill when it fits.
+Then type `/paper-writer` or `/mg-review` followed by your request. You can also ask normally ("review my paper like MG would", "make this abstract sound less like AI") and Claude loads the matching skill.
+
+To rebuild a `.skill` file after editing a skill folder:
+
+```bash
+cd skills && zip -r paper-writer.skill paper-writer -x "*/__pycache__/*"
+```
+
+---
+
+# paper-writer
 
 ## What it does
 
@@ -65,3 +80,28 @@ The skill is built from two source documents: a guide to avoiding AI-sounding pr
 | "Delete many [transitions]" | Encourages deleting real logical connectives | Delete those that fail the checks and keep the rest. |
 | Checklist counts of 0 and sentence-length targets | Applied to short passages, they push toward forced edits | Counts exclude legitimate uses. Statistics apply only to texts of about 20 sentences or more. |
 | (missing) | Synonym swapping ("delve" to "dig into") was not named as a failure | Overcorrection is now listed as a defect alongside the AI patterns. |
+
+---
+
+# mg-review
+
+## What it does
+
+- **Review:** a first review of a paper given as PDF, LaTeX (it follows `\input`), Markdown or text. The output is a `<paper>.mg-review.md` file with one `[Review scope]` note, one `[Main priority]` note, then notes per section in reading order. Each note has an anchor (`S3.P2 · L118–131`), a label from MG's vocabulary, the quoted phrase, why it matters, what to do and what to keep. There is no score and no verdict.
+- **Re-review:** a revised version is reviewed against the earlier review. Resolved points are marked `[Current review: improved]`, old notes stay as historical, and only the remaining priorities stay live.
+- **Review and edit:** only when you allow it. Edits are conservative and keep the previous wording as comments, semantic changes are flagged separately, and numbers and results never change.
+- **Inline comments:** on request, a copy of the source with `% MG [Label] ...` comments above each paragraph.
+
+`scripts/paper_map.py` prints the section and paragraph anchors, with line ranges and page numbers for PDFs. With `--numbers`, it cross-references headline numbers from the abstract, introduction and conclusion against the rest of the paper and lists any that never appear in the tables or results.
+
+```bash
+python mg-review/scripts/paper_map.py paper.tex
+```
+
+```bash
+python mg-review/scripts/paper_map.py paper.tex --numbers
+```
+
+The full review model is kept unchanged in `mg-review/references/mg-review-model.md`. The skill reads it before every review.
+
+**Honesty rule:** the skill states in `[Review scope]` what it checked and what it did not. A cited source is reported as checked only when it was actually opened, with the section or equation that was checked.
